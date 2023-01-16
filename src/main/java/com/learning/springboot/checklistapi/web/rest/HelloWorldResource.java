@@ -1,4 +1,4 @@
-package web.rest;
+package com.learning.springboot.checklistapi.web.rest;
 
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
