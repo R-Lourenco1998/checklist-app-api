@@ -20,7 +20,7 @@ public class ChecklistItem extends BaseEntity{
 
     private String description;
 
-    private Boolean idCompleted;
+    private Boolean isCompleted;
 
     private LocalDate deadLine;
 

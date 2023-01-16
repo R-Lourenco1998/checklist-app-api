@@ -48,7 +48,7 @@ public class ChecklistItemService {
         }
 
         if (isCompleted != null) {
-            retriviedItem.setIdCompleted(isCompleted);
+            retriviedItem.setIsCompleted(isCompleted);
         }
 
         if (deadline != null) {
@@ -87,7 +87,7 @@ public class ChecklistItemService {
         return this.checklistItemRepository.save(checklistItem);
     }
 
-    public Iterable<ChecklistItem> getAllChecklistItems() {
+    public Iterable<ChecklistItem> findAllChecklistItems() {
         return this.checklistItemRepository.findAll();
     }
 

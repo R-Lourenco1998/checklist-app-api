@@ -46,7 +46,6 @@ public class CategoryService {
         if (guid == null || !StringUtils.hasText(name)) {
             throw new IllegalArgumentException("Invalid category guid or name");
         }
-
         Category category = this.categoryRepository.findByGuid(guid).orElseThrow(
                 () -> new ResourceNotFoundException("Category not found"));
         category.setName(name);
