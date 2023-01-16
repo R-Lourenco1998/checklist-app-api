@@ -25,7 +25,7 @@ public class Category extends BaseEntity{
     @Column(unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<ChecklistItem> checklistItems;
 
 }

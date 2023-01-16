@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 @Data
 @Entity(name = "ChecklistItem")
@@ -22,10 +22,10 @@ public class ChecklistItem extends BaseEntity{
 
     private Boolean idCompleted;
 
-    private LocalTime deadLine;
+    private LocalDate deadLine;
 
-    private LocalTime postDate;
+    private LocalDate postDate;
 
     @ManyToOne
-    private Category categoryEntity;
+    private Category category;
 }
