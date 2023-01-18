@@ -11,12 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @Entity(name = "Category")
 @Table(indexes = { @Index(name = "IDX_GUID_CAT", columnList = "guid") })
-public class Category extends BaseEntity{
+public class Category extends BaseEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

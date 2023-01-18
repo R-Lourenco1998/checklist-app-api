@@ -6,18 +6,22 @@ import com.learning.springboot.checklistapi.exception.ResourceNotFoundException;
 import com.learning.springboot.checklistapi.repository.CategoryRepository;
 import com.learning.springboot.checklistapi.repository.ChecklistItemRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
 @Service
 public class ChecklistItemService {
 
+    @Autowired
     private ChecklistItemRepository checklistItemRepository;
 
+    @Autowired
     private CategoryRepository categoryRepository;
 
     private void validateChecklistItemData(String description, Boolean isCompleted, LocalDate deadLine, String categoryGuid) {
@@ -87,7 +91,7 @@ public class ChecklistItemService {
         return this.checklistItemRepository.save(checklistItem);
     }
 
-    public Iterable<ChecklistItem> findAllChecklistItems() {
+    public List<ChecklistItem> findAllChecklistItems() {
         return this.checklistItemRepository.findAll();
     }
 

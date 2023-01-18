@@ -15,31 +15,32 @@ public class ChecklistItemDTO {
 
     private String guid;
 
-    @NotBlank(message = "Checklist item name cannot be empty")
+    @NotBlank(message = "Checklist item description cannot be either null or empty")
     private String description;
 
-    @NotNull(message = "isCompleted cannot be null")
+    @NotNull(message = "Is completed is mandatory")
     private Boolean isCompleted;
 
-    @NotBlank(message = "Checklist name cannot be empty")
-    private String name;
+    @NotNull(message = "Deadline is mandatory")
+    private LocalDate deadline;
 
-    private LocalDate deadLine;
+    private LocalDate postedDate;
 
-    private LocalDate postDate;
-
-    private String categoryGuid;
-
-    private Category category;
+    private CategoryDTO category;
     public static ChecklistItemDTO toDTO(ChecklistItem checklistItem) {
 
         return ChecklistItemDTO.builder()
                 .guid(checklistItem.getGuid())
                 .description(checklistItem.getDescription())
-                .deadLine(checklistItem.getDeadLine())
-                .postDate(checklistItem.getPostDate())
+                .deadline(checklistItem.getDeadLine())
+                .postedDate(checklistItem.getPostDate())
                 .isCompleted(checklistItem.getIsCompleted())
-                .categoryGuid(checklistItem.getCategory().getGuid())
+                .category(checklistItem.getCategory() != null ?
+                        CategoryDTO.builder()
+                                .guid(checklistItem.getCategory().getGuid())
+                                .name(checklistItem.getCategory().getName())
+                                .build() :
+                        null)
                 .build();
     }
 }

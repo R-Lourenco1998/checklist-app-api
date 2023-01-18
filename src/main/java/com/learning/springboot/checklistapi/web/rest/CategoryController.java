@@ -31,10 +31,7 @@ public class CategoryController {
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CategoryDTO>> getAllCategories(@RequestBody CategoryDTO categoryDTO) throws ValidationException {
-        if (categoryDTO.getGuid() == null) {
-            throw new ValidationException("Category guid cannot be null");
-        }
+    public ResponseEntity<List<CategoryDTO>> getAllCategories() throws ValidationException {
 
         List<CategoryDTO> response = StreamSupport.stream(this.categoryService.findAllCategories().spliterator(), false)
                 .map(CategoryDTO::toDTO) // .map(checklistItem -> ChecklistItemDTO.toDTO(checklistItem))
