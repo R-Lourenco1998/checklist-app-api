@@ -2,6 +2,7 @@ package com.learning.springboot.checklistapi.web.rest;
 
 import com.learning.springboot.checklistapi.entity.ChecklistItem;
 import com.learning.springboot.checklistapi.entity.dto.ChecklistItemDTO;
+import com.learning.springboot.checklistapi.entity.dto.NewResourceDTO;
 import com.learning.springboot.checklistapi.service.ChecklistItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,12 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.xml.bind.ValidationException;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/api/v1/checklist-items")
 @Slf4j
+@CrossOrigin(origins = "http://localhost:4200")
 public class ChecklistItemController {
 
     private ChecklistItemService checklistItemService;
@@ -56,7 +60,7 @@ public class ChecklistItemController {
             @ApiResponse(responseCode = "400", description = "Bad Request")
     })
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createChecklistItem(@RequestBody ChecklistItemDTO checklistItemDTO) throws ValidationException {
+    public ResponseEntity<NewResourceDTO> createChecklistItem(@RequestBody ChecklistItemDTO checklistItemDTO) throws ValidationException {
         if(checklistItemDTO.getCategory() == null) {
             throw new javax.validation.ValidationException("Category cannot be null");
         }
@@ -65,7 +69,7 @@ public class ChecklistItemController {
                 checklistItemDTO.getIsCompleted(),
                 checklistItemDTO.getDeadline(),
                 checklistItemDTO.getCategory().getGuid());
-        return new ResponseEntity<>(newChecklistItem.getGuid(), HttpStatus.CREATED);
+        return new ResponseEntity<>(new NewResourceDTO(newChecklistItem.getGuid()) , HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{guid}", produces = MediaType.APPLICATION_JSON_VALUE)

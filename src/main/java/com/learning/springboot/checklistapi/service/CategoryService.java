@@ -51,21 +51,22 @@ public class CategoryService {
         category.setName(name);
         log.debug("Updating category {}", category);
         return this.categoryRepository.save(category);
-    };
+    }
 
     public void deleteCategory(String guid) {
-        if (!StringUtils.hasText(guid)) {
-            throw new IllegalArgumentException("Invalid category guid");
+        if(!StringUtils.hasText(guid)){
+            throw new IllegalArgumentException("Category guid cannot be empty or null");
         }
+        Category retrievedCategory = this.categoryRepository.findByGuid(guid).orElseThrow(
+                () -> new ResourceNotFoundException("Category not found.")
+        );
 
         List<ChecklistItem> checklistItems = this.checklistItemRepository.findByCategoryGuid(guid);
-        if (!CollectionUtils.isEmpty(checklistItems)) {
-            throw new CategoryServiceException("Cannot delete category with checklist items");
+        if(!CollectionUtils.isEmpty(checklistItems)){
+            throw new CategoryServiceException("It is not possible to delete given category as it has been used by checklist items");
         }
-        Category category = this.categoryRepository.findByGuid(guid).orElseThrow(
-                () -> new ResourceNotFoundException("Category not found"));
-        log.debug("Deleting category {}", category);
-        this.categoryRepository.delete(category);
+        log.debug("Deleting category [ guid = {} ]",guid);
+        this.categoryRepository.delete(retrievedCategory);
     }
 
     public Iterable<Category> findAllCategories() {

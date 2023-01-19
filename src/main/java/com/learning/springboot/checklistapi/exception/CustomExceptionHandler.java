@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.xml.bind.ValidationException;
 import java.time.LocalDateTime;
 
 @Slf4j
@@ -18,5 +19,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Object> handleResourceNotFoundException(Exception ex, WebRequest request) throws Exception {
 
        return new ResponseEntity<>(new ExceptionResponse(LocalDateTime.now(), ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public final ResponseEntity<ExceptionResponse> handleValidationException(Exception ex, WebRequest request) throws Exception {
+
+        return new ResponseEntity<>(new ExceptionResponse(LocalDateTime.now(), ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }
